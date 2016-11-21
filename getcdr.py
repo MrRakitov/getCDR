@@ -9,11 +9,12 @@ import re
 #GLOBAL variables
 #Length of the number to find
 NUMBER_LENGTH = 6
+#file name regular expression
+FILE_REGEX = r"\.blg"
 
 #check the length of the number
 def check_num_len(num, num_len):
-	'''Returns TRUE if length of the num equals num_len.
-	Returns False otherwise'''
+	'''Returns TRUE if length of the num equals num_len. Returns False otherwise'''
 
 	return True if len(num) == num_len else False
 
@@ -56,15 +57,22 @@ def print_file(file, number):
 	Input: File handler
 	Returns: nothing
 	"""
-
+	entry_counter = 0
 	regex = r"[ ]" + str(number)
 	for line in file:
 		if re.search(regex, line):
 			print(line, end='')
+			entry_counter += 1
+	return entry_counter
 
 def proceed(number):
 	file = open_in_file()
-	print_file(file, number)
+	result = print_file(file, number)
+	if result > 0:
+		print("{} entry(s) found".format(result))
+	else:
+		print("No entry found.")
+
 	return True
 
 def main():
