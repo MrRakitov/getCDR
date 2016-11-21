@@ -6,6 +6,10 @@ import sys
 #to use the regular expression
 import re
 
+#GLOBAL variables
+#Length of the number to find
+NUMBER_LENGTH = 6
+
 #check the length of the number
 def check_num_len(num, num_len):
 	'''Returns TRUE if length of the num equals num_len.
@@ -27,14 +31,14 @@ def check_init_args():
 	else:
 		return True
 
-def get_the_number(num_len):
+def get_the_number():
 	"""Get the number from command line
 	Returns:
 	    TYPE: str
 	"""
 	if check_init_args():
 		num = sys.argv[1]
-		return num if check_num_len (num, num_len) else False
+		return num if check_num_len (num, NUMBER_LENGTH) else False
 
 def open_in_file():
 	"""Trying to open a file.
@@ -65,12 +69,11 @@ def proceed(number):
 
 def main():
 	#Get the number to find
-	num_len = 6
-	number = get_the_number(num_len)
+	number = get_the_number()
 	if number != False:
 		proceed(number)
 	else:
-		print("Number must be {} digits long".format(num_len))
+		print("Number must be {} digits long".format(NUMBER_LENGTH))
 
 if __name__ == '__main__':
     main()
