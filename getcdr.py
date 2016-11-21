@@ -1,6 +1,17 @@
 #!/usr/bin/python3
 
+#to use the command string arguments
 import sys
+
+#to use the regular expression
+import re
+
+#check the length of the number
+def check_num_len(num, num_len):
+	'''Returns TRUE if length of the num equals num_len.
+	Returns False otherwise'''
+
+	return True if len(num) == num_len else False
 
 def check_init_args():
 	"""Summary
@@ -16,20 +27,50 @@ def check_init_args():
 	else:
 		return True
 
-def get_the_number():
+def get_the_number(num_len):
+	"""Get the number from command line
+	Returns:
+	    TYPE: str
+	"""
 	if check_init_args():
-		return sys.argv[1]
+		num = sys.argv[1]
+		return num if check_num_len (num, num_len) else False
+
+def open_in_file():
+	"""Trying to open a file.
+	Returns: A file handler if OK or False if something wrong
+	"""
+	try:
+		f = open('pbxlog.20161109.Транзитка.blg', 'r')
+		return f
+	except:
+		print("Oops! something wrong with opening file")
+		return False
+
+def print_file(file, number):
+	"""Print content of the file
+	Input: File handler
+	Returns: nothing
+	"""
+
+	regex = r"[ ]" + str(number)
+	for line in file:
+		if re.search(regex, line):
+			print(line, end='')
+
+def proceed(number):
+	file = open_in_file()
+	print_file(file, number)
+	return True
 
 def main():
-#	print(len(sys.argv), sys.argv)
-
-	number = get_the_number()
-
-#	print (number)
-
-#    f = open("pbxlog.20161109.Транзитка.blg")
-#    for line in f:
-#        print(line, end='')
+	#Get the number to find
+	num_len = 6
+	number = get_the_number(num_len)
+	if number != False:
+		proceed(number)
+	else:
+		print("Number must be {} digits long".format(num_len))
 
 if __name__ == '__main__':
     main()
