@@ -3,6 +3,9 @@
 #to use the command string arguments
 import sys
 
+#to use directory listing
+import os
+
 #to use the regular expression
 import re
 
@@ -74,6 +77,18 @@ def proceed(number):
 		print("No entry found.")
 
 	return True
+
+def get_files_list():
+	'''Read all files with FILE_REGEX mask in current directory
+	Returns: list of file names
+	'''
+	files = os.listdir(os.curdir)
+	files_list = []
+	for file in files:
+		if re.search(FILE_REGEX, file):
+			files_list.append(file)
+	return files_list
+
 
 def main():
 	#Get the number to find
