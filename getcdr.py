@@ -44,12 +44,12 @@ def get_the_number():
 		num = sys.argv[1]
 		return num if check_num_len (num, NUMBER_LENGTH) else False
 
-def open_in_file():
+def open_in_file(filename):
 	"""Trying to open a file.
 	Returns: A file handler if OK or False if something wrong
 	"""
 	try:
-		f = open('pbxlog.20161109.Транзитка.blg', 'r')
+		f = open(filename, 'r')
 		return f
 	except:
 		print("Oops! something wrong with opening file")
@@ -69,13 +69,13 @@ def print_file(file, number):
 	return entry_counter
 
 def proceed(number):
-	file = open_in_file()
-	result = print_file(file, number)
-	if result > 0:
-		print("{} entry(s) found".format(result))
-	else:
-		print("No entry found.")
-
+	entrys = 0
+	for filename in get_files_list():
+		file = open_in_file(filename)
+		result = print_file(file, number)
+		if result > 0:
+			entrys += result
+	print('{} entry(s) found'.format(entrys))
 	return True
 
 def get_files_list():
